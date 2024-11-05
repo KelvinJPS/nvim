@@ -15,7 +15,7 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -116,7 +116,7 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
-vim.keymap.set('n', '<leader>f', vim.cmd.Oil)
+vim.keymap.set('n', '<leader>e', vim.cmd.Oil)
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -484,6 +484,10 @@ require('lazy').setup {
           --  For example, in C this would take you to the header.
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+          -- lookup for documentation of current item with leader k
+          map('k', vim.lsp.buf.hover, 'Hover Documentation')
+          -- map('<leader>k', vim.lsp.buf.signature_help, 'Signature Documentation')
+          --
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
           --    See `:help CursorHold` for information about when this is executed
@@ -809,12 +813,13 @@ require('lazy').setup {
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
-      require('mini.surround').setup()
       require('mini.bracketed').setup()
       require('mini.tabline').setup()
       require('mini.move').setup()
       require('mini.jump').setup()
       require('mini.pairs').setup()
+      require('mini.operators').setup()
+
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
@@ -894,6 +899,7 @@ require('lazy').setup {
   'preservim/vim-pencil',
   'junegunn/goyo.vim',
   'ledger/vim-ledger',
+  'wakatime/vim-wakatime',
 
   {
     'ThePrimeagen/harpoon',
@@ -908,20 +914,20 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>ha', function()
         harpoon:list():add()
       end)
-      vim.keymap.set('n', '<C-e>', function()
+      vim.keymap.set('n', '<leader>he', function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
       end)
 
-      vim.keymap.set('n', '<C-h>', function()
+      vim.keymap.set('n', '<leader>h1', function()
         harpoon:list():select(1)
       end)
-      vim.keymap.set('n', '<C-t>', function()
+      vim.keymap.set('n', '<leader>h2', function()
         harpoon:list():select(2)
       end)
-      vim.keymap.set('n', '<C-n>', function()
+      vim.keymap.set('n', '<leader>h3', function()
         harpoon:list():select(3)
       end)
-      vim.keymap.set('n', '<C-s>', function()
+      vim.keymap.set('n', '<leader>h4', function()
         harpoon:list():select(4)
       end)
 
@@ -950,6 +956,15 @@ require('lazy').setup {
         templates = '/home/kelvin/Documents/templates/',
       }
     end,
+  },
+  {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
   },
   {
     'yetone/avante.nvim',
