@@ -13,6 +13,13 @@ vim.g.have_nerd_font = false
 
 -- Make line numbers default
 vim.opt.number = true
+
+-- Set dictionary path based on OS
+if vim.fn.has 'unix' == 1 then
+  vim.opt.dictionary:append '/usr/share/dict/words'
+else
+  vim.opt.dictionary:append(vim.fn.expand '~/AppData/Local/nvim/words')
+end
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
